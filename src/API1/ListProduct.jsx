@@ -52,9 +52,10 @@ const ListProduct = () => {
         let productsTemp=listProducts
         if (searchInput !== undefined) {
             productsTemp = listProducts.filter(product =>
-                product.title.includes(searchInput)
+                product.title.toLowerCase().includes(searchInput.toLowerCase())
                 || product.id.toString().includes(searchInput)
                 || product.description.includes(searchInput)
+                || product.category.includes(searchInput)
             )
         }
         if (currentcategorie !== undefined) {
@@ -79,21 +80,28 @@ const ListProduct = () => {
     
     
     return (
-        <div className='container-fuild my-1 '>
-            <div className="search w-50">
-                <form className=' row g-4 align-items-center justify-content-around'>
-                    <label className='form-label col-auto'>search</label>
-                    <div className='col-auto'>
-                        <input type="text" id='search-input' className='form-control' />
+        <div className='container-fuild m-1 '>
+            
+            <div className="search w-100 bg-dark text-light p-2">
+                <form className='row'>
+                    <div className='col-2'>
+                        <h1 className=''>My store</h1>
                     </div>
-                    <button type="submit" className='col-auto btn btn-secondary' onClick={handleSearch}>Search</button>
-                    <button type='reset' className='col-auto btn btn-secondary' onClick={()=>setSeachInput(undefined)}>reset</button>
+                    <div className="col-10 row align-items-center" role="group" >
+                        <div className='col-8 mx-2'>
+                            <input type="text" id='search-input' className='form-control' />
+                        </div>
+                        <button type="submit" className='col-1 btn btn-secondary  mx-2' onClick={handleSearch}>Search</button>
+                        <button type='reset' className='col-1 btn btn-secondary mx-2' onClick={()=>setSeachInput(undefined)}>reset</button>
+                    </div>
+                    
                 </form>
             </div>
-            <h5>Categories</h5>
-            <div className="btn-group g-5  justify-content-between" role="group" aria-label="Button group">
+            <div className="row justify-content-between align-items-center my-2" >
+                <div className="col-12 btn-group g-2 justify-content-between my-2" role="group" aria-label="Button group">
+                    {displayCategories()}
+                </div>
                 
-                {displayCategories()}
             </div>
 
             <div className="listProducts">
